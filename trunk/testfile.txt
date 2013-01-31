@@ -1,2 +1,3 @@
 A load of random text for commit 1.
 Time for a second commit.
+And a third local commit.
