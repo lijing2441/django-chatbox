@@ -9,21 +9,21 @@ typedef array<int, SIZE> matrix;
 
 constexpr int f(const int a) { return matrix_A[a] * matrix_B[a]; }
 
-template<int... i>
+template<int... Is>
 constexpr matrix fs() {
-  return matrix{{ f(i)... }};
+  return matrix{{ f(Is)... }};
 }
 
-template<int... i> struct S;
+template<int... Is> struct S;
 
-template<int... i> struct S<0, i...> {
+template<int... Is> struct S<0, Is...> {
   static constexpr matrix gs() {
-    return fs<0, i...>();
+    return fs<0, Is...>();
   }
 };
-template<int i, int... j> struct S<i, j...> {
+template<int I, int... Js> struct S<I, Js...> {
   static constexpr matrix gs() {
-    return S<i-1, i, j...>::gs();
+    return S<I-1, I, Js...>::gs();
   }
 };
 
