@@ -13,7 +13,7 @@ constexpr int f(const int a) { return matrix_A[a] * matrix_B[a]; }
 
 template<int... i>
 constexpr matrix fs() {
-  return matrix{{ STRINGIFICATOR(f(i)...) }};
+  return matrix{{ f(i)... }};
 }
 
 template<int... i> struct S;
