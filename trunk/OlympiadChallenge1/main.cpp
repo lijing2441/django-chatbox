@@ -4,8 +4,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
-
-#include "Timer.h"
+#include <chrono>
+//#include "Timer.h"
 #include "DataPacket.h"
 #include "PassCode.h"
 #include "Setup.h"
@@ -30,18 +30,22 @@ double doWork(DataPacket &dataPacket)
 	PassCode passCode;
 
 	// Find the code and record the ellapsed time
-	Timer timer = Timer();
-	timer.Start();
+	typedef std::chrono::system_clock clock;
+	typedef std::chrono::nanoseconds nano;
+	clock::time_point t0 = clock::now();
+	// Timer timer = Timer();
+	// timer.Start();
 	solver.findCode(dataPacket, passCode);
-	timer.Stop();
+	clock::time_point t1 = clock::now();
+	// timer.Stop();
 
 	// Display the passcode on the console
 	std::cout << "Code:";
 	for(int idx = 0; idx < PassCode::NUM_DIGITS; idx++)
 		std::cout << " " << passCode.digits[idx];
 	std::cout << std::endl;
-
-	return timer.Duration();
+	
+	return std::chrono::duration_cast<nano>(t1 - t0).count();
 }
 
 /**
@@ -58,10 +62,10 @@ int main()
 	double duration = doWork(dataPacket);
 
 	// Display total execution time
-	std::cout << "Duration = " << duration << "ms" << std::endl;
+	std::cout << "Duration = " << duration << "ns" << std::endl;
 
 	// Pause before exiting
-	system("pause");
+	// system("pause");
 
 	return 0;
 }
