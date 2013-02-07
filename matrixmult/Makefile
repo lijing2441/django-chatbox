@@ -4,7 +4,7 @@ targets = MatrixMult1 MatrixMult2 TimerOnly CLike1 CLike2 CLike3 CompileTime
 all: $(targets)
 
 $(targets):
-	g++ -O99 -fconstexpr-depth=9300 $@.cpp -o $@ -std=c++11
+	g++ -O99 -fconstexpr-depth=9300 -ftemplate-depth=9000 $@.cpp -o $@ -std=c++11
 
 clean:
 	rm $(targets)
@@ -13,7 +13,7 @@ test:
 	make -s test-delegate
 
 test-delegate:
-	rm results.txt;\
+	:> results.txt;\
 	$(foreach e, $(targets), \
 	echo $(e) ;\
 	{ $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; \
