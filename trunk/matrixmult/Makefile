@@ -16,9 +16,8 @@ test-delegate:
 	:> results.txt;\
 	$(foreach e, $(targets), \
 	echo $(e) ;\
-	{ $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; \
-	$(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; $(CURDIR)/$(e) ; } |\
-	awk '/time/ { total += $$2} /time/ { print $$2 } END {print "$(e) average: " total/10 "\n"}' |\
+	for i in {1..100}; do $(CURDIR)/$(e); done |\
+	awk '/time/ { total += $$2} /time/ { print $$2 } END {print "$(e) average: " total/100 "\n"}' |\
 	 tee -a results.txt; )\
 	echo "Summary of averages: " ; \
 	{ $(foreach e, $(targets), \
